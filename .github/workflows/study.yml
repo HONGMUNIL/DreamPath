@@ -70,7 +70,7 @@ jobs:
           cat back/src/main/resources/application-secret.yml
           
       - name: print-directory
-        run:
+        run: |
           ls -a front
           ls -a back/src/main/resources
           
@@ -96,11 +96,11 @@ jobs:
     needs: build-push
     runs-on: ubuntu-latest
     steps:
-      - name: shh
+      - name: ssh
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_PUBLIC_IP }}
-          usename: ubuntu
+          username: ubuntu
           key: ${{ secrets.SSH_KEY }}
           script: |
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/dreampath-react-app:latest
